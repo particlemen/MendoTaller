@@ -2,55 +2,55 @@
  ob_start();
  session_start();
 
- 
+
  // it will never let you open index(login) page if session is set
-// Mendoza es un gran profesor
+ // Mendoza es el mejor profe de la usm desde Marti C:C:C: Auxilio me tiene un cuchillo puesto en la garganta.
  if ( isset($_SESSION['user'])!="" ) {
   header("Location: home.php");
   exit;
  }
- 
+
  $error = false;
- 
- if( isset($_POST['btn-login']) ) { 
-  
+
+ if( isset($_POST['btn-login']) ) {
+
   // prevent sql injections/ clear user invalid inputs
-  $email = trim($_POST['email']);
-  $email = strip_tags($email);
-  $email = htmlspecialchars($email);
-  
+  $rol = trim($_POST['rol']);
+  $rol = strip_tags($rol);
+  $rol = htmlspecialchars($rol);
+
   $pass = trim($_POST['pass']);
   $pass = strip_tags($pass);
   $pass = htmlspecialchars($pass);
   // prevent sql injections / clear user invalid inputs
-  
-  if(empty($email)){
+
+  if(empty($rol)){
    $error = true;
-   $emailError = "Por favor ingresa tu rol";
-  } 
+   $rolError = "Por favor ingresa tu rol";
+  }
   if(empty($pass)){
    $error = true;
-   $passError = "Ingresa una contraseña valida";
+   $passError = "Ingresa una contraseÃ±a valida";
   }
-  
+
   // if there's no error, continue to login
   if (!$error) {
-   
+
    $password = hash('sha256', $pass); // password hashing using SHA256
-  
-   $res=mysql_query("SELECT id_usuario, nombre_usuario, contraseña FROM usuarios WHERE id_usuario='$email'");
+
+   $res=mysql_query("SELECT id_usuario, nombre_usuario, contraseÃ±a FROM usuarios WHERE id_usuario='$rol'");
    $row=mysql_fetch_array($res);
    $count = mysql_num_rows($res); // if uname/pass correct it returns must be 1 row
-   
-   if( $count == 1 && $row['contraseña']==$password ) {
+
+   if( $count == 1 && $row['contraseÃ±a']==$password ) {
     $_SESSION['user'] = $row['id_usuario'];
     header("Location: home.php");
    } else {
     $errMSG = "Valores erroneos, intentalo de nuevo";
    }
-    
+
   }
-  
+
  }
 ?>
 <!DOCTYPE html>
@@ -67,20 +67,20 @@
 
  <div id="login-form">
     <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-    
+
      <div class="col-md-12">
-        
+
          <div class="form-group">
              <h2 class="">Ingresa aqui!</h2>
             </div>
-        
+
          <div class="form-group">
              <hr />
             </div>
-            
+
             <?php
    if ( isset($errMSG) ) {
-    
+
     ?>
     <div class="form-group">
              <div class="alert alert-danger">
@@ -90,43 +90,43 @@
                 <?php
    }
    ?>
-            
-            <div class="form-group">
-             <div class="input-group">
-                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-             <input type="email" name="email" class="form-control" placeholder="tu rol sin guion" value="<?php echo $email; ?>" maxlength="40" />
-                </div>
-                <span class="text-danger"><?php echo $emailError; ?></span>
-            </div>
-            
+
+   <div class="form-group">
+    <div class="input-group">
+       <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+    <input type="text" name="rol" class="form-control" placeholder="xxxxxxxx" value="<?php echo $rol; ?>" maxlength="40" />
+       </div>
+       <span class="text-danger"><?php echo $rolError; ?></span>
+   </div>
+
             <div class="form-group">
              <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-             <input type="password" name="pass" class="form-control" placeholder="contraseña" maxlength="15" />
+             <input type="password" name="pass" class="form-control" placeholder="contraseÃ±a" maxlength="15" />
                 </div>
                 <span class="text-danger"><?php echo $passError; ?></span>
             </div>
-            
+
             <div class="form-group">
              <hr />
             </div>
-            
+
             <div class="form-group">
              <button type="submit" class="btn btn-block btn-primary" name="btn-login">Ingresar</button>
             </div>
-            
+
             <div class="form-group">
              <hr />
             </div>
-            
+
             <div class="form-group">
              <a href="register.php">No eres usuario? registrate aqui!</a>
             </div>
-        
+
         </div>
-   
+
     </form>
-    </div> 
+    </div>
 
 </div>
 

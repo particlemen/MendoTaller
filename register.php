@@ -11,27 +11,25 @@
  $error = false;
 
  if ( isset($_POST['btn-signup']) ) {
-  
+
   // clean user inputs to prevent sql injections
   $name = trim($_POST['name']);
   $name = strip_tags($name);
   $name = htmlspecialchars($name);
-  
-  $email = trim($_POST['email']);
-  $email = strip_tags($email);
-  $email = htmlspecialchars($email);
-  
+
+  $rol = trim($_POST['rol']);
+  $rol = strip_tags($rol);
+  $rol = htmlspecialchars($rol);
+
   $pass = trim($_POST['pass']);
   $pass = strip_tags($pass);
   $pass = htmlspecialchars($pass);
-  
+
   // basic name validation
   if (empty($name)) {
    $error = true;
    $nameError = "Ingresa tu nombre de usuario.";
-  } else if (strlen($name) < 3) {
-   $error = true;
-   $nameError = "Nombre con al menos 3 letras";
+
   } else if (!preg_match("/^[a-zA-Z ]+$/",$name)) {
    $error = true;
    $nameError = "Caracteres raros en tu nombre, revisalos";
@@ -42,64 +40,57 @@
    $count = mysql_num_rows($result);
    if($count!=0){
     $error = true;
-    $emailError = "usuario dado ya esta en uso";
+    $rolError = "usuario dado ya esta en uso";
 	}
    }
 
 
-   // check email exist or not
-   $query = "SELECT id_estudiante FROM usuarios WHERE id_estudiante ='$email'";
+   // check rol exist or not
+   $query = "SELECT id_estudiante FROM usuarios WHERE id_estudiante ='$rol'";
    $result = mysql_query($query);
    $count = mysql_num_rows($result);
    if($count!=0){
     $error = true;
-    $emailError = "rol dado ya esta en uso";
-	}   
-   $query = "SELECT id_estudiante FROM Estudiantes WHERE id_estudiante ='$email'";
-   $result = mysql_query($query);
-   $count = mysql_num_rows($result);
-   if($count!=0){
-    $error = true;
-    $emailError = "Ese estudiante con ese rol no existe, mentiroso";
-   }
- 
+    $rolError = "rol dado ya esta en uso";
+	}
+
 
 
   // password validation
   if (empty($pass)){
    $error = true;
-   $passError = "Por favor ingresa tu contraseña";
+   $passError = "Por favor ingresa tu contraseï¿½a";
   } else if(strlen($pass) < 6) {
    $error = true;
-   $passError = "Contraseña con al menos 6 caracteres";
+   $passError = "Contraseï¿½a con al menos 6 caracteres";
   }
 
   // password encrypt using SHA256();
   $password = hash('sha256', $pass);
-  
+
 
 
 
   // if there's no error, continue to signup
   if( !$error ) {
-   
-   $query = "INSERT INTO usuarios(nombre_usuario, id_usuario, id_estudiante,contraseña, privilegio) VALUES('$name','$email','$email','$password', 0)";
+
+   $query = "INSERT INTO usuarios(nombre_usuario, id_usuario, id_estudiante,contraseï¿½a, privilegio) VALUES('$name','$rol','$rol','$password', 0)";
    $res = mysql_query($query);
-    
+
    if ($res) {
     $errTyp = "Exito!";
     $errMSG = "Usuario registrado, ya puedes logear!";
     unset($name);
-    unset($email);
+    unset($rol);
     unset($pass);
    } else {
     $errTyp = "Peligro";
-    $errMSG = "Intentalo mas tarde"; 
-   } 
-    
+    $errMSG = "Intentalo mas tarde";
+   }
+
   }
-  
-  
+
+
  }
 ?>
 <!DOCTYPE html>
@@ -116,20 +107,20 @@
 
  <div id="login-form">
     <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-    
+
      <div class="col-md-12">
-        
+
          <div class="form-group">
              <h2 class="">Ingreso </h2>
             </div>
-        
+
          <div class="form-group">
              <hr />
             </div>
-            
+
             <?php
    if ( isset($errMSG) ) {
-    
+
     ?>
     <div class="form-group">
              <div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
@@ -139,7 +130,7 @@
                 <?php
    }
    ?>
-            
+
             <div class="form-group">
              <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
@@ -147,15 +138,15 @@
                 </div>
                 <span class="text-danger"><?php echo $nameError; ?></span>
             </div>
-            
+
             <div class="form-group">
              <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-             <input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="40" value="<?php echo $email ?>" />
+             <input type="rol" name="rol" class="form-control" placeholder="Enter Your rol" maxlength="40" value="<?php echo $rol ?>" />
                 </div>
-                <span class="text-danger"><?php echo $emailError; ?></span>
+                <span class="text-danger"><?php echo $rolError; ?></span>
             </div>
-            
+
             <div class="form-group">
              <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
@@ -163,27 +154,27 @@
                 </div>
                 <span class="text-danger"><?php echo $passError; ?></span>
             </div>
-            
+
             <div class="form-group">
              <hr />
             </div>
-            
+
             <div class="form-group">
              <button type="submit" class="btn btn-block btn-primary" name="btn-signup">Ingresar</button>
             </div>
-            
+
             <div class="form-group">
              <hr />
             </div>
-            
+
             <div class="form-group">
              <a href="index.php">Ingresa aqui!</a>
             </div>
-        
+
         </div>
-   
+
     </form>
-    </div> 
+    </div>
 
 </div>
 
