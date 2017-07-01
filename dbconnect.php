@@ -5,8 +5,8 @@
  // but I strongly suggest you to use PDO or MySQLi.
 
  define('DBHOST', 'localhost');
- define('DBUSER', 'root');
- define('DBPASS', '');
+ define('DBUSER', 'localhost');
+ define('DBPASS', 'localhost');
  define('DBNAME', 'dbtest');
 
  $conn = mysql_connect(DBHOST,DBUSER,DBPASS);
