@@ -35,13 +35,13 @@
    $nameError = "Caracteres raros en tu nombre, revisalos";
   }
    else {
-   $query = "SELECT id_estudiante FROM usuarios WHERE nombre_usuario ='$name'";
+   $query = "SELECT id_estudiante FROM usuario WHERE name ='$name'";
    $result = mysql_query($query);
    $count = 0;
-   try {
+   if ($result)
+   {
    $count = mysql_num_rows($result);
-  }catch (Exception $e) {
-  }
+   }
 
 
    if($count!=0){
@@ -52,12 +52,14 @@
 
 
    // check rol exist or not
-   $query = "SELECT id_estudiante FROM usuarios WHERE id_estudiante ='$rol'";
+   $query = "SELECT id_estudiante FROM usuario WHERE id_estudiante ='$rol'";
    $result = mysql_query($query);
    $count = 0;
-   try {
+   if ($result)
+   {
    $count = mysql_num_rows($result);
- } catch(Exception $e){}
+   }
+
    if($count!=0){
     $error = true;
     $rolError = "rol dado ya esta en uso";
@@ -84,19 +86,19 @@
 
 
 
-  // if there's no error, continue to signup
-  if( !$error ) {
+  if($error == false) {
 
-   $query = "INSERT INTO usuarios(nombre_usuario, id_usuario, id_estudiante,contrase�a, privilegio) VALUES('$name','$rol','$rol','$password', 0)";
+   $query = "INSERT INTO usuario (id_usuario, name, contraseña, privilegio, id_estudiante) VALUES ('$rol', '$name','$password', 0,'$rol')";
    $res = mysql_query($query);
-
+   echo "aqui entre";
    if ($res) {
     $errTyp = "Exito!";
     $errMSG = "Usuario registrado, ya puedes logear!";
     unset($name);
     unset($rol);
     unset($pass);
-   } else {
+   }
+   else {
     $errTyp = "Peligro";
     $errMSG = "Intentalo mas tarde";
    }
@@ -124,7 +126,7 @@
      <div class="col-md-12">
 
          <div class="form-group">
-             <h2 class="">Ingreso </h2>
+             <h2 class="">Registro de cuenta </h2>
             </div>
 
          <div class="form-group">
@@ -181,7 +183,7 @@
             </div>
 
             <div class="form-group">
-             <a href="index.php">Ingresa aqui!</a>
+             <a href="index.php">Ya tienes cuenta? clickea aqui!</a>
             </div>
 
         </div>

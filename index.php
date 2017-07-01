@@ -43,7 +43,7 @@ include_once 'dbconnect.php';
 
    $password = hash('sha256', $pass); // password hashing using SHA256
 
-   $res=mysql_query("SELECT id_usuario, nombre_usuario, contraseña FROM usuarios WHERE id_usuario='$rol'");
+   $res=mysql_query("SELECT id_usuario, nombre_usuario, contraseña FROM usuario WHERE id_usuario='$rol'");
 
 
    if( $count == 1 && $row['contraseña']==$password ) {
@@ -55,7 +55,7 @@ include_once 'dbconnect.php';
 
   }
 
- }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -75,7 +75,7 @@ include_once 'dbconnect.php';
      <div class="col-md-12">
 
          <div class="form-group">
-             <h2 class="">Ingresa aqui!</h2>
+             <h2 class=""> Portal Talleres USM</h2>
             </div>
 
          <div class="form-group">
@@ -98,7 +98,7 @@ include_once 'dbconnect.php';
    <div class="form-group">
     <div class="input-group">
        <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-    <input type="text" name="rol" class="form-control" placeholder="xxxxxxxx" value="<?php echo $rol; ?>" maxlength="40" />
+    <input type="text" name="rol" class="form-control" placeholder="rol xxxxxxxxx" value="<?php echo $rol; ?>" maxlength="40" />
        </div>
        <span class="text-danger"><?php echo $rolError; ?></span>
    </div>
