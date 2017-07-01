@@ -1,3 +1,14 @@
+--
+-- Database: 'dbtest'
+--
+
+-- --------------------------------------
+
+--
+-- table structure for table users
+--
+
+
 CREATE TABLE  "HORAS_SEMANALES"
    (	"CREDITOS" NUMBER NOT NULL ENABLE,
 	"HORAS" NUMBER NOT NULL ENABLE,
