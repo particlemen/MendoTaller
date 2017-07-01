@@ -37,25 +37,34 @@
    else {
    $query = "SELECT id_estudiante FROM usuarios WHERE nombre_usuario ='$name'";
    $result = mysql_query($query);
+   $count = 0;
+   try {
    $count = mysql_num_rows($result);
+  }catch (Exception $e) {
+  }
+
+
    if($count!=0){
     $error = true;
-    $rolError = "usuario dado ya esta en uso";
-	}
+    $rolError = "nombre de usuario dado ya esta en uso";
+	 }
    }
 
 
    // check rol exist or not
    $query = "SELECT id_estudiante FROM usuarios WHERE id_estudiante ='$rol'";
    $result = mysql_query($query);
+   $count = 0;
+   try {
    $count = mysql_num_rows($result);
+ } catch(Exception $e){}
    if($count!=0){
     $error = true;
     $rolError = "rol dado ya esta en uso";
 	}
 
-    if(strlen((string)$rol) != 8){
-      $error = true;
+    if(strlen((string)$rol) != 9){
+      $error = trunombreusuario;
       $rolError = "Rol dado esta fuera de formato";
     }
 
@@ -63,10 +72,10 @@
   // password validation
   if (empty($pass)){
    $error = true;
-   $passError = "Por favor ingresa tu contrase�a";
+   $passError = "Por favor ingresa tu contraseña";
   } else if(strlen($pass) < 6) {
    $error = true;
-   $passError = "Contrase�a con al menos 6 caracteres";
+   $passError = "Contraseña con al menos 6 caracteres";
   }
 
   // password encrypt using SHA256();
@@ -101,7 +110,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Registro de cuenta - Talleres libres usm </title>
+<title>Registro de cuenta - Talleres libres USM </title>
 <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css"  />
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -138,7 +147,7 @@
             <div class="form-group">
              <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-             <input type="text" name="name" class="form-control" placeholder="Enter Name" maxlength="50" value="<?php echo $name ?>" />
+             <input type="text" name="name" class="form-control" placeholder="Nombre" maxlength="50" value="<?php echo $name ?>" />
                 </div>
                 <span class="text-danger"><?php echo $nameError; ?></span>
             </div>
@@ -146,7 +155,7 @@
             <div class="form-group">
              <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-             <input type="rol" name="rol" class="form-control" placeholder="Enter Your rol" maxlength="40" value="<?php echo $rol ?>" />
+             <input type="rol" name="rol" class="form-control" placeholder="rol xxxxxxxxx" maxlength="40" value="<?php echo $rol ?>" />
                 </div>
                 <span class="text-danger"><?php echo $rolError; ?></span>
             </div>
@@ -154,7 +163,7 @@
             <div class="form-group">
              <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-             <input type="password" name="pass" class="form-control" placeholder="Enter Password" maxlength="15" />
+             <input type="password" name="pass" class="form-control" placeholder="Contraseña" maxlength="15" />
                 </div>
                 <span class="text-danger"><?php echo $passError; ?></span>
             </div>
