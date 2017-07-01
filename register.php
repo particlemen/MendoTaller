@@ -54,6 +54,10 @@
     $rolError = "rol dado ya esta en uso";
 	}
 
+    if(strlen((string)$rol) != 8){
+      $error = true;
+      $rolError = "Rol dado esta fuera de formato"
+    }
 
 
   // password validation
