@@ -1,29 +1,9 @@
-<?php
-mysql_query("mysql -u ".DBUSER." -p ".DBPASS." ")
- // this will avoid mysql_connect() deprecation error.
- error_reporting( ~E_DEPRECATED & ~E_NOTICE );
- // but I strongly suggest you to use PDO or MySQLi.
 
- define('DBHOST', 'localhost');
- define('DBUSER', 'root');
- define('DBPASS', 'localhost');
-
- $conn = mysql_connect(DBHOST,DBUSER,DBPASS);
- $dbcon = mysql_select_db('dbtest');
-
- if ( !$conn ) {
-  die("Connection failed : " . mysql_error());
- }
-
- if ( !$dbcon ) {
-  die("Database Connection failed : " . mysql_error());
- }
-
-?>
 
 
 
 <?php
+include_once 'dbconnect.php';
  ob_start();
  session_start();
 
@@ -64,14 +44,13 @@ mysql_query("mysql -u ".DBUSER." -p ".DBPASS." ")
    $password = hash('sha256', $pass); // password hashing using SHA256
 
    $res=mysql_query("SELECT id_usuario, nombre_usuario, contraseña FROM usuarios WHERE id_usuario='$rol'");
-   $row=mysql_fetch_array($res);
-   $count = mysql_num_rows($res); // if uname/pass correct it returns must be 1 row
+
 
    if( $count == 1 && $row['contraseña']==$password ) {
     $_SESSION['user'] = $row['id_usuario'];
     header("Location: home.php");
    } else {
-    $errMSG = "Valores erroneos, intentalo de nuevo";
+    $errMSG = "Combinacion de datos incorrectos, arreglalos pillin";
    }
 
   }

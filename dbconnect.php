@@ -5,7 +5,7 @@
  // but I strongly suggest you to use PDO or MySQLi.
 
  define('DBHOST', 'localhost');
- define('DBUSER', 'localhost');
+ define('DBUSER', 'root');
  define('DBPASS', 'localhost');
  define('DBNAME', 'dbtest');
 
