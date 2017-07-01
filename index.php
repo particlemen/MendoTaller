@@ -1,5 +1,5 @@
 <?php
-
+mysql_query("mysql -u ".DBUSER." -p ".DBPASS." ")
  // this will avoid mysql_connect() deprecation error.
  error_reporting( ~E_DEPRECATED & ~E_NOTICE );
  // but I strongly suggest you to use PDO or MySQLi.
@@ -7,10 +7,9 @@
  define('DBHOST', 'localhost');
  define('DBUSER', 'root');
  define('DBPASS', 'localhost');
- define('DBNAME', 'dbtest');
 
  $conn = mysql_connect(DBHOST,DBUSER,DBPASS);
- $dbcon = mysql_select_db(DBNAME);
+ $dbcon = mysql_select_db('dbtest');
 
  if ( !$conn ) {
   die("Connection failed : " . mysql_error());
