@@ -85,7 +85,6 @@
 
 
 
-
   if($error == false) {
 
    $query = "INSERT INTO usuario (id_usuario, name, contraseña, privilegio, id_estudiante) VALUES ('$rol', '$name','$password', 0,'$rol')";
